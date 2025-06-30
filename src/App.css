@@ -1,0 +1,57 @@
+:root {
+  --main-gradient: linear-gradient(to top, #b31130, #e1163c);
+  --secondary-gradient: linear-gradient(to top, #17021c, #3f054c);
+  --neutral-gradient: linear-gradient(to top, #d0c8d6, #e9e5ec);
+  --font-family: 'Gotham', sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family);
+  background: var(--neutral-gradient);
+  color: #1a1a1a;
+  min-height: 100vh;
+}
+
+/* Login & Flights Form Styling */
+.login-container,
+.flights-page {
+  max-width: 500px;
+  margin: 4rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #b31130;
+}
+
+form input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+form button {
+  width: 100%;
+  padding: 0.75rem;
+  background: var(--main-gradient);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+form button:hover {
+  opacity: 0.9;
+}
