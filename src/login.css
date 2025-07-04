@@ -1,0 +1,72 @@
+:root {
+  --red-start:    #b31130;
+  --red-end:      #e1163c;
+  --purple-start: #17021c;
+  --purple-end:   #3f054c;
+  --silver-start: #d0c8d6;
+  --silver-end:   #e9e5ec;
+  --text-light:   #ffffff;
+  --text-dark:    #333333;
+  --font:         'Segoe UI', Roboto, sans-serif;
+}
+
+.login-page {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to top, var(--silver-start), var(--silver-end));
+  margin: 0;
+  font-family: var(--font);
+}
+
+.login-card {
+  width: 100%;
+  max-width: 360px;
+  background: linear-gradient(to top, var(--red-start), var(--red-end));
+  padding: 2.5rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  text-align: center;
+}
+
+.login-card h1 {
+  color: var(--text-light);
+  margin-bottom: 1.75rem;
+  font-size: 1.8rem;
+}
+
+.login-card input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  background: #ffffff;
+  color: var(--text-dark);
+  box-sizing: border-box;
+}
+
+.login-card button {
+  width: 100%;
+  padding: 0.75rem;
+  background: linear-gradient(to top, var(--purple-start), var(--purple-end));
+  color: var(--text-light);
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  font-size: 1rem;
+}
+
+.login-card button:hover {
+  opacity: 0.9;
+}
+
+.error {
+  color: yellow;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}

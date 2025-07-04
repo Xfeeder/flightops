@@ -1,33 +1,44 @@
-import React from 'react';
+// src/App.jsx
+
+import React from 'react'
 import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Link,
+  NavLink,
   Navigate
-} from 'react-router-dom';
-import { auth } from './firebase';
-import { AuthProvider, useAuth } from './context/AuthProvider';
-import Dashboard from './pages/Dashboard';
-import Flights from './pages/Flights';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-import FlightTracker from './components/FlightTracker';
-import './App.css';
+} from 'react-router-dom'
 
+import { auth } from './firebase'
+import { AuthProvider, useAuth } from './context/AuthProvider'
+
+import Dashboard from './pages/Dashboard'
+import Flights from './pages/Flights'
+import Login from './pages/Login'
+import Signup from './pages/Signup'
+import FlightTracker from './components/FlightTracker'
+
+import './App.css'
+
+/**
+ * Wraps protected routes, redirecting to /login if not authenticated.
+ */
 function ProtectedRoute({ children }) {
-  const { currentUser } = useAuth();
-  return currentUser ? children : <Navigate to="/login" replace />;
+  const { currentUser } = useAuth()
+  return currentUser ? children : <Navigate to="/login" replace />
 }
 
+/**
+ * Main application content with navigation, routes, and conditional footer.
+ */
 function AppContent() {
-  const { currentUser } = useAuth();
+  const { currentUser } = useAuth()
 
   return (
     <Router>
       <nav className="app-nav">
-        <Link to="/" className="app-link">Dashboard</Link>
-        <Link to="/flights" className="app-link">Flights</Link>
+        <NavLink to="/"      className="app-link">Dashboard</NavLink>
+        <NavLink to="/flights" className="app-link">Flights</NavLink>
 
         {currentUser ? (
           <button
@@ -38,8 +49,8 @@ function AppContent() {
           </button>
         ) : (
           <>
-            <Link to="/login" className="app-link">Login</Link>
-            <Link to="/signup" className="app-link">Signup</Link>
+            <NavLink to="/login"  className="app-link">Login</NavLink>
+            <NavLink to="/signup" className="app-link">Signup</NavLink>
           </>
         )}
       </nav>
@@ -54,6 +65,7 @@ function AppContent() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/flights"
             element={
@@ -62,9 +74,10 @@ function AppContent() {
               </ProtectedRoute>
             }
           />
-          <Route path="/login" element={<Login />} />
+
+          <Route path="/login"  element={<Login />}  />
           <Route path="/signup" element={<Signup />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="*"         element={<Navigate to="/" replace />} />
         </Routes>
       </main>
 
@@ -74,13 +87,16 @@ function AppContent() {
         </footer>
       )}
     </Router>
-  );
+  )
 }
 
+/**
+ * Wraps the entire app with AuthProvider for context-based authentication.
+ */
 export default function App() {
   return (
     <AuthProvider>
       <AppContent />
     </AuthProvider>
-  );
+  )
 }

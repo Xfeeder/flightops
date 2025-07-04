@@ -1,116 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-    />
-    <title>FlightOps – Login</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Xfeeder Flightops</title>
+  <style>
+    :root {
+      --red-start: #b31130;
+      --red-end: #e1163c;
+      --purple-start: #17021c;
+      --purple-end: #3f054c;
+      --silver-start: #d0c8d6;
+      --silver-end: #e9e5ec;
+      --text-light: #ffffff;
+      --text-dark: #333333;
+      --font: 'Segoe UI', Roboto, sans-serif;
+    }
 
-    <!-- Favicon & PWA manifest -->
-    <link rel="icon" href="/favicon.ico" />
-    <link rel="manifest" href="/manifest.json" />
+    body {
+      margin: 0;
+      font-family: var(--font);
+      background: linear-gradient(to top, var(--silver-start), var(--silver-end));
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
 
-    <!-- Content Security Policy -->
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;"
-    />
+    .login-card {
+      background: linear-gradient(to top, var(--red-start), var(--red-end));
+      padding: 2.5rem 2rem;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+      width: 100%;
+      max-width: 360px;
+      text-align: center;
+    }
 
-    <style>
-      :root {
-        --main-gradient: linear-gradient(to top, #b31130, #e1163c);
-        --secondary-gradient: linear-gradient(to top, #17021c, #3f054c);
-        --neutral-gradient: linear-gradient(to top, #d0c8d6, #e9e5ec);
-        --font-family: 'Gotham', sans-serif;
+    .login-card h1 {
+      color: var(--text-light);
+      margin-bottom: 1.75rem;
+      font-size: 1.8rem;
+    }
+
+    .login-card input {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      background: #ffffff;
+      color: var(--text-dark);
+      box-sizing: border-box;
+    }
+
+    .login-card button {
+      width: 100%;
+      padding: 0.75rem;
+      background: linear-gradient(to top, var(--purple-start), var(--purple-end));
+      color: var(--text-light);
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: opacity 0.2s ease-in-out;
+      font-size: 1rem;
+    }
+
+    .login-card button:hover {
+      opacity: 0.9;
+    }
+
+    .error {
+      color: yellow;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <form class="login-card" onsubmit="return handleLogin(event)">
+    <h1>XF Flightops</h1>
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <div id="error" class="error" style="display: none;">Invalid credentials</div>
+    <button type="submit">Sign In</button>
+  </form>
+
+  <script>
+    function handleLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const error = document.getElementById('error');
+
+      if (email === 'admin@airline.com' && password === 'flight123') {
+        window.location.href = '/app';
+      } else {
+        error.style.display = 'block';
       }
-
-      body {
-        margin: 0;
-        padding: 0;
-        font-family: var(--font-family);
-        background: var(--neutral-gradient);
-        color: #1a1a1a;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-      }
-
-      .login-container {
-        max-width: 500px;
-        padding: 2rem;
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-      }
-
-      h2 {
-        text-align: center;
-        margin-bottom: 1.5rem;
-        color: #b31130;
-      }
-
-      form label {
-        display: block;
-        margin-bottom: 0.5rem;
-        font-size: 0.9rem;
-      }
-
-      form input {
-        width: 100%;
-        padding: 0.75rem;
-        margin-bottom: 1rem;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        font-size: 1rem;
-      }
-
-      form button {
-        width: 100%;
-        padding: 0.75rem;
-        background: var(--main-gradient);
-        color: white;
-        border: none;
-        border-radius: 6px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: opacity 0.3s ease;
-      }
-
-      form button:hover {
-        opacity: 0.9;
-      }
-    </style>
-  </head>
-
-  <body>
-    <div class="login-container">
-      <h2>Login</h2>
-      <form action="/login" method="POST">
-        <label for="email">Email</label>
-        <input
-          id="email"
-          type="email"
-          name="email"
-          autocomplete="email"
-          placeholder="you@example.com"
-          required
-        />
-
-        <label for="password">Password</label>
-        <input
-          id="password"
-          type="password"
-          name="password"
-          autocomplete="current-password"
-          placeholder="••••••••"
-          required
-        />
-
-        <button type="submit">Log In</button>
-      </form>
-    </div>
-  </body>
+    }
+  </script>
+</body>
 </html>

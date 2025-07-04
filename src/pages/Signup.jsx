@@ -1,35 +1,47 @@
-import React, { useState } from 'react';
-import { auth } from '../firebase';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { auth } from '../firebase'
+import '../styles/Login.css' // reuse same styles
 
-function Signup() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const navigate = useNavigate();
+export default function Signup() {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const nav = useNavigate()
 
-  const handleSignup = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async e => {
+    e.preventDefault()
+    setError('')
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      navigate('/');
-    } catch (err) {
-      setError('Sign-up failed');
+      await createUserWithEmailAndPassword(auth, email, password)
+      nav('/')
+    } catch {
+      setError('Signup failed – try again')
     }
-  };
+  }
 
   return (
-    <div>
-      <h2>Signup</h2>
-      <form onSubmit={handleSignup}>
-        <input type="email" value={email} placeholder="Email" onChange={(e) => setEmail(e.target.value)} required /><br />
-        <input type="password" value={password} placeholder="Password" onChange={(e) => setPassword(e.target.value)} required /><br />
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button type="submit">Sign Up</button>
+    <div className="login-page">
+      <form className="login-card" onSubmit={handleSubmit}>
+        <h1>Sign Up</h1>
+        {error && <div className="error">{error}</div>}
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+          required
+        />
+        <button type="submit">Create Account</button>
       </form>
     </div>
-  );
+  )
 }
-
-export default Signup;
