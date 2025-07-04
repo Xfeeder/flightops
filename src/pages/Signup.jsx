@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../firebase'
-import '../styles/Login.css' // reuse same styles
+import '../Login.css' // reuse same styles
 
 export default function Signup() {
   const [email, setEmail] = useState('')
