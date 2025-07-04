@@ -7,10 +7,10 @@ import { auth } from '../firebase';
 import '../login.css';
 
 export default function Login() {
-  const [email, setEmail]       = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError]       = useState('');
-  const navigate                = useNavigate();
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -19,7 +19,7 @@ export default function Login() {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       navigate('/');
-    } catch {
+    } catch (err) {
       setError('Login failed – check credentials');
     }
   };
