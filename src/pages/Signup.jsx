@@ -1,25 +1,25 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { createUserWithEmailAndPassword } from 'firebase/auth'
-import { auth } from '../firebase'
-import '../Login.css' // reuse same styles
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebase';
+import '../login.css'; // ✅ Add this line
 
 export default function Signup() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-  const nav = useNavigate()
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const nav = useNavigate();
 
   const handleSubmit = async e => {
-    e.preventDefault()
-    setError('')
+    e.preventDefault();
+    setError('');
     try {
-      await createUserWithEmailAndPassword(auth, email, password)
-      nav('/')
+      await createUserWithEmailAndPassword(auth, email, password);
+      nav('/');
     } catch {
-      setError('Signup failed – try again')
+      setError('Signup failed – try again');
     }
-  }
+  };
 
   return (
     <div className="login-page">
@@ -43,5 +43,5 @@ export default function Signup() {
         <button type="submit">Create Account</button>
       </form>
     </div>
-  )
+  );
 }
