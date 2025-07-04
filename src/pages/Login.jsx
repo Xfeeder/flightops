@@ -1,35 +1,39 @@
-import React, { useState } from 'react';
-import { auth } from '../firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
+-import DebugPanel from '../components/DebugPanel';
++import DebugPanel from '../components/DebugPanel';
 
-function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const navigate = useNavigate();
+ export default function Login() {
+   // … existing state …
+-  const [logs, setLogs] = useState([]);
+-  const showDebug = new URLSearchParams(window.location.search).has('debug');
++  const [logs, setLogs] = useState([]);
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      navigate('/');
-    } catch (err) {
-      setError('Invalid credentials');
-    }
-  };
+   const log = (msg) => setLogs((all) => [...all, msg]);
 
-  return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleLogin}>
-        <input type="email" value={email} placeholder="Email" onChange={(e) => setEmail(e.target.value)} required /><br />
-        <input type="password" value={password} placeholder="Password" onChange={(e) => setPassword(e.target.value)} required /><br />
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button type="submit">Login</button>
-      </form>
-    </div>
-  );
-}
+   const handleLogin = async (e) => {
+     e.preventDefault();
+     log('🚀 handleLogin fired');
+     log('🔑 attempting Firebase signIn…');
 
-export default Login;
+     try {
+       await signInWithEmailAndPassword(auth, email, password);
+       log('✅ Login successful');
+       navigate('/', { replace: true });
+     } catch (err) {
+       log(`❌ Login failed: ${err.message}`);
+       setError('Invalid credentials');
+     }
+   };
+
+   return (
+     <div>
+       <h2>Login</h2>
+       <form onSubmit={handleLogin}>
+         {/* email & password inputs */}
+         <button type="submit">Login</button>
+       </form>
+
+-      {showDebug && <DebugPanel messages={logs} />}
++      <DebugPanel messages={logs} />
+     </div>
+   );
+ }

@@ -1,67 +1,41 @@
 // src/pages/Login.jsx
-
-import React, { useState } from 'react';
-import { useAuth } from '../context/AuthProvider';
+import React, { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebase';
 
-export default function Login() {
-  const { login } = useAuth();
+function Login() {
+  const email = useRef();
+  const password = useRef();
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-
-  const handleSubmit = async e => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    setError('');
-    setLoading(true);
-
     try {
-      await login(email, password);
-      navigate('/', { replace: true });
-    } catch {
-      setError('Invalid email or password');
-      setLoading(false);
+      await signInWithEmailAndPassword(auth, email.current.value, password.current.value);
+      console.log("✅ Login successful");
+      navigate("/", { replace: true });
+    } catch (err) {
+      console.error("❌ Login failed:", err.message);
     }
   };
 
   return (
-    <div className="login-container">
-      <h2>Login</h2>
-
-      {error && (
-        <p className="error-text">{error}</p>
-      )}
-
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="email">Email</label>
-        <input
-          id="email"
-          type="email"
-          placeholder="you@example.com"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          autoComplete="email"
-          required
-        />
-
-        <label htmlFor="password">Password</label>
-        <input
-          id="password"
-          type="password"
-          placeholder="••••••••"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          autoComplete="current-password"
-          required
-        />
-
-        <button type="submit" disabled={loading}>
-          {loading ? 'Logging in…' : 'Log In'}
-        </button>
+    <div style={{ padding: '40px', maxWidth: '400px', margin: 'auto' }}>
+      <h2>🔐 Sign In</h2>
+      <form onSubmit={handleLogin}>
+        <div style={{ marginBottom: '12px' }}>
+          <label>Email</label><br />
+          <input type="email" ref={email} required />
+        </div>
+        <div style={{ marginBottom: '12px' }}>
+          <label>Password</label><br />
+          <input type="password" ref={password} required />
+        </div>
+        <button type="submit">Sign In</button>
       </form>
     </div>
-);
+  );
 }
+
+export default Login;

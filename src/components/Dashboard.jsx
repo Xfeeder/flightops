@@ -1,9 +1,7 @@
+// src/pages/Dashboard.jsx
 import React, { useEffect, useState } from 'react';
 import { db } from '../firebase';
-import {
-  collection,
-  onSnapshot,
-} from 'firebase/firestore';
+import { collection, onSnapshot } from 'firebase/firestore';
 
 import {
   Chart as ChartJS,
@@ -18,6 +16,8 @@ import { Bar } from 'react-chartjs-2';
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 function Dashboard() {
+  console.log("✅ Dashboard rendered");
+
   const [flights, setFlights] = useState([]);
 
   useEffect(() => {
