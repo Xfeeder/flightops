@@ -12,14 +12,17 @@
   --font:         'Segoe UI', Roboto, sans-serif;
 }
 
+body {
+  margin: 0;
+  font-family: var(--font);
+}
+
 .login-page {
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   background: linear-gradient(to top, var(--silver-start), var(--silver-end));
-  margin: 0;
-  font-family: var(--font);
 }
 
 .login-card {
@@ -59,7 +62,7 @@
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition: opacity 0.2s ease-in-out;
   font-size: 1rem;
 }
 
