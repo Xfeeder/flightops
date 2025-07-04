@@ -1,84 +1,47 @@
 // src/App.jsx
-
-import React from 'react'
+import React from 'react';
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   NavLink,
-  Navigate
-} from 'react-router-dom'
+  Navigate,
+  Outlet
+} from 'react-router-dom';
 
-import { auth } from './firebase'
-import { AuthProvider, useAuth } from './context/AuthProvider'
+import { auth }             from './firebase';
+import { AuthProvider, useAuth } from './context/AuthProvider';
 
-import Dashboard from './pages/Dashboard'
-import Flights from './pages/Flights'
-import Login from './pages/Login'
-import Signup from './pages/Signup'
-import FlightTracker from './components/FlightTracker'
+import Dashboard    from './pages/Dashboard';
+import Flights      from './pages/Flights';
+import Login        from './pages/Login';
+import Signup       from './pages/Signup';
+import FlightTracker from './components/FlightTracker';
 
-import './App.css'
+import './App.css';
 
-/**
- * Wraps protected routes, redirecting to /login if not authenticated.
- */
+// Redirects to /login if not signed in
 function ProtectedRoute({ children }) {
-  const { currentUser } = useAuth()
-  return currentUser ? children : <Navigate to="/login" replace />
+  const { currentUser } = useAuth();
+  return currentUser ? children : <Navigate to="/login" replace />;
 }
 
-/**
- * Main application content with navigation, routes, and conditional footer.
- */
-function AppContent() {
-  const { currentUser } = useAuth()
+// Layout wrapper for all protected pages
+function AppLayout() {
+  const { currentUser } = useAuth();
 
   return (
-    <Router>
+    <>
       <nav className="app-nav">
-        <NavLink to="/"      className="app-link">Dashboard</NavLink>
+        <NavLink to="/"       className="app-link">Dashboard</NavLink>
         <NavLink to="/flights" className="app-link">Flights</NavLink>
-
-        {currentUser ? (
-          <button
-            onClick={() => auth.signOut()}
-            className="button-link"
-          >
-            Logout
-          </button>
-        ) : (
-          <>
-            <NavLink to="/login"  className="app-link">Login</NavLink>
-            <NavLink to="/signup" className="app-link">Signup</NavLink>
-          </>
-        )}
+        <button onClick={() => auth.signOut()} className="button-link">
+          Logout
+        </button>
       </nav>
 
       <main className="app-main">
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path="/flights"
-            element={
-              <ProtectedRoute>
-                <Flights />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route path="/login"  element={<Login />}  />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="*"         element={<Navigate to="/" replace />} />
-        </Routes>
+        <Outlet />
       </main>
 
       {currentUser && (
@@ -86,17 +49,35 @@ function AppContent() {
           <FlightTracker />
         </footer>
       )}
-    </Router>
-  )
+    </>
+  );
 }
 
-/**
- * Wraps the entire app with AuthProvider for context-based authentication.
- */
 export default function App() {
   return (
     <AuthProvider>
-      <AppContent />
+      <Router>
+        <Routes>
+          {/* Public auth routes */}
+          <Route path="/login"  element={<Login  />} />
+          <Route path="/signup" element={<Signup />} />
+
+          {/* Protected routes wrapped in AppLayout */}
+          <Route
+            element={
+              <ProtectedRoute>
+                <AppLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route path="/"        element={<Dashboard />} />
+            <Route path="/flights" element={<Flights  />} />
+          </Route>
+
+          {/* Fallback: redirect anything else to / */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </Router>
     </AuthProvider>
-  )
+  );
 }
