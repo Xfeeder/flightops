@@ -1,35 +1,67 @@
+// src/pages/Login.jsx
+
 import React, { useState } from 'react';
-import { auth } from '../firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { useAuth } from '../context/AuthProvider';
 import { useNavigate } from 'react-router-dom';
 
-function Login() {
+export default function Login() {
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
+    setError('');
+    setLoading(true);
+
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      navigate('/');
-    } catch (err) {
-      setError('Invalid credentials');
+      await login(email, password);
+      navigate('/', { replace: true });
+    } catch {
+      setError('Invalid email or password');
+      setLoading(false);
     }
   };
 
   return (
-    <div>
+    <div className="login-container">
       <h2>Login</h2>
-      <form onSubmit={handleLogin}>
-        <input type="email" value={email} placeholder="Email" onChange={(e) => setEmail(e.target.value)} required /><br />
-        <input type="password" value={password} placeholder="Password" onChange={(e) => setPassword(e.target.value)} required /><br />
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button type="submit">Login</button>
+
+      {error && (
+        <p className="error-text">{error}</p>
+      )}
+
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          placeholder="you@example.com"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          autoComplete="email"
+          required
+        />
+
+        <label htmlFor="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          placeholder="••••••••"
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+          autoComplete="current-password"
+          required
+        />
+
+        <button type="submit" disabled={loading}>
+          {loading ? 'Logging in…' : 'Log In'}
+        </button>
       </form>
     </div>
-  );
+);
 }
-
-export default Login;

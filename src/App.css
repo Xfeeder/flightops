@@ -1,3 +1,5 @@
+/* src/App.css */
+
 :root {
   --main-gradient: linear-gradient(to top, #b31130, #e1163c);
   --secondary-gradient: linear-gradient(to top, #17021c, #3f054c);
@@ -14,44 +16,94 @@ body {
   min-height: 100vh;
 }
 
-/* Login & Flights Form Styling */
+/* NAVIGATION */
+.app-nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 24px;
+  background: var(--secondary-gradient);
+}
+
+.app-link,
+.button-link {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* MAIN CONTENT AREA */
+.app-main {
+  padding: 24px;
+}
+
+/* FOOTER TRACKER */
+.flight-tracker-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--neutral-gradient);
+  padding: 20px;
+  text-align: center;
+}
+
+/* FORM CONTAINERS */
 .login-container,
 .flights-page {
   max-width: 500px;
   margin: 4rem auto;
   padding: 2rem;
-  background: white;
+  background: #ffffff;
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
+/* SECTION HEADERS */
 h2 {
+  margin: 0 0 1.5rem;
   text-align: center;
-  margin-bottom: 1.5rem;
   color: #b31130;
+}
+
+/* FORM ELEMENTS */
+form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
 }
 
 form input {
   width: 100%;
   padding: 0.75rem;
   margin-bottom: 1rem;
+  font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 6px;
-  font-size: 1rem;
 }
 
 form button {
   width: 100%;
   padding: 0.75rem;
   background: var(--main-gradient);
-  color: white;
+  color: #ffffff;
   border: none;
   border-radius: 6px;
   font-weight: bold;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: opacity 0.3s ease;
 }
 
 form button:hover {
   opacity: 0.9;
+}
+
+/* ERROR MESSAGE */
+.error-text {
+  color: #e1163c;
+  text-align: center;
+  margin-bottom: 1rem;
 }
