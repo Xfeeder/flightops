@@ -15,4 +15,5 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
+// bump to trigger Netlify rebuild
 export const db   = getFirestore(app);
