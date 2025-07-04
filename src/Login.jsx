@@ -1,25 +1,28 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { signInWithEmailAndPassword } from 'firebase/auth'
-import { auth } from '../firebase'
-import '../styles/Login.css'  // see CSS below
+// src/pages/Login.jsx
+
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebase';
+import '../login.css';
 
 export default function Login() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-  const nav = useNavigate()
+  const [email, setEmail]       = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError]       = useState('');
+  const navigate                = useNavigate();
 
   const handleSubmit = async e => {
-    e.preventDefault()
-    setError('')
+    e.preventDefault();
+    setError('');
+
     try {
-      await signInWithEmailAndPassword(auth, email, password)
-      nav('/')
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate('/');
     } catch {
-      setError('Login failed – check credentials')
+      setError('Login failed – check credentials');
     }
-  }
+  };
 
   return (
     <div className="login-page">
@@ -43,5 +46,5 @@ export default function Login() {
         <button type="submit">Sign In</button>
       </form>
     </div>
-  )
+  );
 }
