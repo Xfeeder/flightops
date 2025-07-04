@@ -1,14 +1,18 @@
-import { initializeApp } from 'firebase/app'
-import { getAuth } from 'firebase/auth'
+// src/firebase.js
+import { initializeApp } from 'firebase/app';
+import { getAuth }       from 'firebase/auth';
+import { getFirestore }  from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyBtRu1MOJV2z3RfUEbu_G-CoAIDokgyJps',
-  authDomain: 'flightops-login.firebaseapp.com',
-  projectId: 'flightops-login',
-  storageBucket: 'flightops-login.appspot.com',
+  apiKey:            'YOUR_API_KEY',
+  authDomain:        'flightops-login.firebaseapp.com',
+  projectId:         'flightops-login',
+  storageBucket:     'flightops-login.appspot.com',
   messagingSenderId: 'YOUR_SENDER_ID',
-  appId: 'YOUR_APP_ID'
-}
+  appId:             'YOUR_APP_ID'
+};
 
-const app = initializeApp(firebaseConfig)
-export const auth = getAuth(app)
+const app = initializeApp(firebaseConfig);
+
+export const auth = getAuth(app);
+export const db   = getFirestore(app);
