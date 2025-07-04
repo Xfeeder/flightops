@@ -1,0 +1,6 @@
+/* public/css/styles.css */
+@charset "UTF-8";
+@import url("reset.css");
+@import url("base/typography.css") screen and (min-width: 768px);
+@import url("theme/colors.css");
+/* …rest of your rules… */
