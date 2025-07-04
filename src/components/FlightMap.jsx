@@ -1,7 +1,8 @@
 import React from 'react';
 import L from 'leaflet';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import airports from '../data/airports';
+import airports from '../data/airportList.js';
+
 
 // 1. Configure Leaflet’s default icon once
 import defaultIconUrl from 'leaflet/dist/images/marker-icon.png';
