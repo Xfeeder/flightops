@@ -1,0 +1,77 @@
+/* src/layouts/DashboardLayout.css */
+:root {
+  --primary-gradient: linear-gradient(to top, #b31130 0%, #e1163c 100%);
+  --silver-gradient:  linear-gradient(to top, #d0c8d6 0%, #e9e5ec 100%);
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  grid-template-rows: auto 1fr auto;
+  height: 100vh;
+  background: var(--silver-gradient);
+}
+
+.topbar {
+  grid-column: 1 / -1;
+  background: var(--primary-gradient);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-link {
+  margin-left: 1rem;
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+.nav-link.active {
+  text-decoration: underline;
+}
+
+.logout-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.sidebar {
+  grid-row: 2;
+  background: var(--silver-gradient);
+  color: #333;
+  padding: 1rem;
+  border-right: 4px solid #b31130;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+}
+
+.content {
+  grid-row: 2;
+  background: white;
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+.footer {
+  grid-column: 1 / -1;
+  background: white;
+  border-top: 4px solid #b31130;
+  padding: 0.5rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #555;
+}
