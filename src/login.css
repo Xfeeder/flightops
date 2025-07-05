@@ -1,77 +1,67 @@
-/* src/login.css */
+/* src/pages/login.css */
 
+/* Brand gradients */
 :root {
-  --red-start:    #b31130;
-  --red-end:      #e1163c;
-  --purple-start: #17021c;
-  --purple-end:   #3f054c;
-  --silver-start: #d0c8d6;
-  --silver-end:   #e9e5ec;
-  --text-light:   #ffffff;
-  --text-dark:    #333333;
-  --font:         'Segoe UI', Roboto, sans-serif;
+  --primary-gradient: linear-gradient(to top, #b31130 0%, #e1163c 100%);
+  --silver-gradient:  linear-gradient(to top, #d0c8d6 0%, #e9e5ec 100%);
 }
 
-body {
-  margin: 0;
-  font-family: var(--font);
-}
-
+/* Full-screen silver background */
 .login-page {
   height: 100vh;
+  margin: 0;
+  background: var(--silver-gradient);
   display: flex;
-  justify-content: center;
   align-items: center;
-  background: linear-gradient(to top, var(--silver-start), var(--silver-end));
+  justify-content: center;
 }
 
+/* Red auth card */
 .login-card {
-  width: 100%;
-  max-width: 360px;
-  background: linear-gradient(to top, var(--red-start), var(--red-end));
-  padding: 2.5rem 2rem;
-  border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-  text-align: center;
+  background: #b31130;  /* match the start of gradient */
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  padding: 2rem;
+  width: 320px;
 }
 
+/* Header text */
 .login-card h1 {
-  color: var(--text-light);
-  margin-bottom: 1.75rem;
-  font-size: 1.8rem;
+  color: white;
+  text-align: center;
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Form styles */
+.login-card form {
+  display: flex;
+  flex-direction: column;
 }
 
 .login-card input {
-  width: 100%;
   padding: 0.75rem;
   margin-bottom: 1rem;
   border: none;
-  border-radius: 6px;
+  border-radius: 4px;
   font-size: 1rem;
-  background: #ffffff;
-  color: var(--text-dark);
-  box-sizing: border-box;
+}
+
+.login-card input[type="email"] {
+  background: white;
+}
+
+.login-card input[type="password"] {
+  background: white;
 }
 
 .login-card button {
-  width: 100%;
   padding: 0.75rem;
-  background: linear-gradient(to top, var(--purple-start), var(--purple-end));
-  color: var(--text-light);
-  font-weight: bold;
+  background: var(--primary-gradient);
   border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: opacity 0.2s ease-in-out;
+  border-radius: 4px;
+  color: white;
   font-size: 1rem;
-}
-
-.login-card button:hover {
-  opacity: 0.9;
-}
-
-.error {
-  color: yellow;
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
+  font-weight: bold;
+  cursor: pointer;
 }
